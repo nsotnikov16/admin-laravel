@@ -1,0 +1,41 @@
+.header {
+    padding: 37px 45px;
+    border-bottom: 1px solid $color;
+    grid-area: header;
+
+
+    &__container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    &__logo {
+        font-size: 26px;
+        color: #100000;
+        font-weight: 900;
+    }
+
+    &__nav {
+        display: flex;
+        align-items: center;
+    }
+
+    &__link {
+        font-size: 22px;
+        margin-right: 35px;
+        &:last-child {
+            margin-right: 0;
+        }
+
+        &_settings {
+            width: 35px;
+            height: 35px;
+        }
+
+        &_user {
+            width: 35px;
+            height: 35px;
+        }
+    }
+}

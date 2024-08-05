@@ -1,0 +1,24 @@
+:root {
+    --color: #000;
+    --color2: #fff;
+    --transition-duration: 0.25s;
+}
+
+body {
+    font-family: $font;
+    color: $color;
+}
+
+.page {
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    grid-template-areas:
+        "header header"
+        "sidebar main"
+        // "footer footer"
+}
+
+.main {
+    grid-area: main;
+    height: calc(100vh - 115px);
+}

@@ -1,0 +1,19 @@
+.sidebar {
+    grid-area: sidebar;
+    padding: 45px;
+    border-right: 1px solid $color;
+    height: calc(100vh - 115px);
+
+    &__nav {
+        display: flex;
+        flex-direction: column;
+    }
+
+    &__link {
+        margin-bottom: 25px;
+        font-size: 22px;
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+}

@@ -18,4 +18,12 @@ yarn-error.log
 /.fleet
 /.idea
 /.vscode
-.osp
+/resources/views/auth
+/resources/views/components/*
+!/resources/views/components/admin
+/resources/views/layouts/*
+!/resources/views/layouts/admin.blade.php
+/resources/views/profile
+/resources/views/dashboard.blade.php
+/resources/views/welcome.blade.php
+/resources/js/*

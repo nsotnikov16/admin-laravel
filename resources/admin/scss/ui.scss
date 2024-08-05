@@ -1,0 +1,21 @@
+.scale {
+    transform: scale(1);
+    transition: transform var(--transition-duration) ease-in;
+    &:hover {
+        transform: scale(1.05);
+    }
+}
+
+.container {
+    padding: 0 45px;
+    margin: 0 auto;
+}
+
+.title {
+    font-size: 40px;
+}
+
+a.active {
+    text-decoration: underline;
+    font-weight: 700;
+}
