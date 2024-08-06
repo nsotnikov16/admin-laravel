@@ -13,9 +13,166 @@
 
 .title {
     font-size: 40px;
+    margin-bottom: 35px;
 }
 
 a.active {
     text-decoration: underline;
     font-weight: 700;
+}
+
+ul.not-type {
+    padding-left: 0;
+    list-style-type: none;
+}
+
+.btn {
+    cursor: pointer;
+    border: 1px solid $color;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: $color2;
+    font-size: 18px;
+    transition: background-color 0.3s linear;
+    border-radius: 5px;
+    padding: 8px;
+
+    &:hover {
+        background: $color;
+        color: $color2;
+    }
+
+    &_bg {
+        background: $color;
+        color: $color2;
+        &:hover {
+            background: $color2;
+            color: $color;
+        }
+    }
+}
+
+.checkbox {
+    position: relative;
+
+    &__input {
+        cursor: pointer;
+        position: absolute;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        opacity: 0;
+        z-index: 1;
+
+        &:checked + .checkbox__label::before {
+            content: "\2713";
+        }
+    }
+
+    &__label {
+        display: flex;
+        font-size: 16px;
+        &::before {
+            flex-shrink: 0;
+            width: 15px;
+            height: 15px;
+            border-radius: 3px;
+            margin: 0 10px 0 0;
+            border: 2px solid $color;
+            content: "";
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    }
+}
+
+.dropdown {
+    position: relative;
+    &__choice {
+        user-select: none;
+        justify-content: start;
+        padding: 8px 40px 8px 20px;
+        position: relative;
+        background: $color2;
+        color: $color;
+        white-space: nowrap;
+
+        &:hover {
+            background: $color2;
+            color: $color;
+        }
+
+        &::before,
+        &::after {
+            content: "";
+            display: block;
+            position: absolute;
+            width: 10px;
+            height: 1.5px;
+            z-index: 1;
+            background: $color;
+            transition: transform 0.2s linear;
+        }
+
+        &::before {
+            transform: rotate(45deg);
+            right: 17px;
+        }
+
+        &::after {
+            transform: rotate(-45deg);
+            right: 10px;
+        }
+    }
+
+    &__container {
+        position: absolute;
+        left: 0;
+        padding-top: 15px;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.2s linear;
+    }
+
+    &__list {
+        background: $color2;
+        list-style-type: none;
+        border: 1px solid $color;
+        border-radius: 5px;
+        padding: 10px 20px;
+    }
+
+    &__item {
+        margin-bottom: 8px;
+        &:last-child {
+            margin-bottom: 0;
+        }
+
+    }
+
+    &_open, &:hover {
+        .dropdown__choice {
+            &::before {
+                transform: rotate(-45deg);
+            }
+
+            &::after {
+                transform: rotate(45deg);
+            }
+        }
+
+        .dropdown__container {
+            opacity: 1;
+            visibility: initial;
+        }
+    }
+
+    .checkbox__label {
+        white-space: nowrap;
+    }
 }

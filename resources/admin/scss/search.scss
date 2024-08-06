@@ -1,0 +1,22 @@
+.search {
+    padding: 6px 7px 6px 20px;
+    border: 1px solid $color;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+
+    &__icon {
+        margin: 0 6px 0 0;
+    }
+
+    &__input {
+        border: none;
+        outline: none;
+        width: 100%;
+        font-size: 20px;
+    }
+
+    &__dropdown {
+        min-width: 20%;
+    }
+}
