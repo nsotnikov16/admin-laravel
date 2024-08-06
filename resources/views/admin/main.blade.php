@@ -10,6 +10,8 @@
                 <button class="btn btn_bg">Добавить</button>
             </div>
         </div>
-        <div class="rows__bottom"></div>
+        <div class="rows__bottom">
+            <x-admin.form></x-admin.form>
+        </div>
     </div>
 </x-admin-layout>

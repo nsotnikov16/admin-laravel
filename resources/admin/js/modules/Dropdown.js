@@ -26,7 +26,7 @@ class Dropdown {
         this.btn.textContent = checkedLength ? ('Выбрано: ' + checkedLength) : this.btn.getAttribute(this.btnAttrStart);
     }
     setListeners() {
-        this.btn.addEventListener('click', this.handleClick.bind(this));
+        if (isMobile) this.btn.addEventListener('click', this.handleClick.bind(this));
         this.checkboxes.forEach(cbx => cbx.addEventListener('change', this.handleChange.bind(this)));
     }
     start() {

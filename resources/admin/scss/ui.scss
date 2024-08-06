@@ -133,18 +133,20 @@ ul.not-type {
     &__container {
         position: absolute;
         left: 0;
-        padding-top: 15px;
+        width: 100%;
+        padding-top: 10px;
         opacity: 0;
         visibility: hidden;
         transition: opacity 0.2s linear;
+        z-index: 2;
     }
 
     &__list {
-        background: $color2;
         list-style-type: none;
         border: 1px solid $color;
         border-radius: 5px;
         padding: 10px 20px;
+        background: $color2;
     }
 
     &__item {
@@ -173,6 +175,6 @@ ul.not-type {
     }
 
     .checkbox__label {
-        white-space: nowrap;
+       font-size: 15px;
     }
 }
