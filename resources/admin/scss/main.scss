@@ -9,16 +9,18 @@ body {
     color: $color;
 }
 
+@include scrollBar('body');
 .page {
     display: grid;
     grid-template-columns: 320px 1fr;
     grid-template-areas:
         "header header"
-        "sidebar main"
+        "sidebar main";
         // "footer footer"
+
+    padding-bottom: 20px;
 }
 
 .main {
     grid-area: main;
-    height: calc(100vh - 115px);
 }

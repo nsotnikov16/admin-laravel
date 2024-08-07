@@ -1,0 +1,73 @@
+.popup {
+    position: fixed;
+    z-index: -1;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(30, 35, 38, 0.7);
+    overflow: auto;
+
+    &__container {
+        position: relative;
+        padding: 45px 15px 15px;
+        background: $color2;
+        max-height: 90vh;
+        max-width: 90vw;
+        overflow: auto;
+    }
+
+    &__close {
+        position: absolute;
+        top: 15px;
+        cursor: pointer;
+        right: 12px;
+        font-size: 15px;
+        font-weight: 600;
+        color: $color2;
+        background: $color;
+        border: 1px solid $color;
+        padding: 3px 5px;
+        border-radius: 5px;
+
+        &:hover {
+            background: $color2;
+            color: $color;
+        }
+    }
+
+    &__title {
+        text-align: center;
+        font-size: 26px;
+        margin-bottom: 20px;
+    }
+
+    &_opened {
+        opacity: 1;
+        visibility: visible;
+        transition: all 0.3s ease;
+        z-index: 100;
+    }
+
+    @media (max-width: 560px) {
+        &__close {
+            width: 20px;
+            height: 20px;
+        }
+    }
+
+    @media (max-width: 767px) {
+        &__container {
+            max-width: 90%;
+        }
+    }
+}
+
+
+@include scrollBar('.popup__container');

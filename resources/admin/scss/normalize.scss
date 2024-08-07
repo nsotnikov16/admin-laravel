@@ -358,10 +358,9 @@ a {
 
 button {
     border: none;
-    outline: none;
     cursor: pointer;
 }
-input {
+input, textarea, button {
     outline: none;
 }
 
@@ -369,6 +368,9 @@ h1, h2, h3, h4, h5, h6, p, li, ul {
     margin: 0;
 }
 
+textarea {
+    resize: vertical;
+}
 
 * {
     box-sizing: border-box;

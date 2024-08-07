@@ -51,9 +51,12 @@
             <label for="" class="checkbox__label">Активность</label>
         </div>
     </div>
-    <div id="editor">
+    <div class="form__row">
+        <label for="#" class="form__label">Описание</label>
+        <textarea name="" id="" cols="30" rows="10" class="form__field">
 
-      </div>
+        </textarea>
+    </div>
     <div class="form__btns">
         <button class="btn form__btn">Изменить</button>
     </div>
