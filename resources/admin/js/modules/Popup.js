@@ -1,5 +1,4 @@
-
-class Popup {
+export default class Popup {
     static className = 'popup';
     classNameOpened = 'popup_opened';
     classNameCloseBtn = 'popup__close'
@@ -9,6 +8,7 @@ class Popup {
         this._handleEscClose = this._handleEscClose.bind(this)
         this.openingLinks = document.querySelectorAll(`[data-pointer="${this.popupElement.id}"]`)
         this.setEventListeners()
+        this.popupElement.popup = this;
     }
 
     open(callback) {
@@ -44,12 +44,9 @@ class Popup {
 
     start() {
         const popups = document.querySelectorAll(`.${Popup.className}`)
-        window.popups = {};
         document.addEventListener('DOMContentLoaded', () => {
             if (!popups.length) return;
-            popups.forEach(item => window.popups[item.id] = new Popup(item))
+            popups.forEach(item => new Popup(item))
         })
     }
 }
-
-export default Popup;

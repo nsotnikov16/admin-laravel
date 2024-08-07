@@ -3,7 +3,6 @@
     border-bottom: 1px solid $color;
     grid-area: header;
 
-
     &__container {
         display: flex;
         justify-content: space-between;
@@ -12,7 +11,7 @@
 
     &__logo {
         font-size: 26px;
-        color: #100000;
+        color: $color;
         font-weight: 900;
     }
 
@@ -31,11 +30,13 @@
         &_settings {
             width: 35px;
             height: 35px;
+
         }
 
         &_user {
             width: 35px;
             height: 35px;
+
         }
     }
 }

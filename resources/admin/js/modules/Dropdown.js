@@ -1,7 +1,7 @@
 import { isMobile } from "../tools/constants";
-class Dropdown {
+export default class Dropdown {
     static className = 'dropdown';
-    static classNameOpen = 'dropdown_open';
+    static classNameOpened = 'dropdown_open';
     btnAttr = 'data-dropdown-show';
     btnAttrStart = 'data-start-text';
     constructor(element) {
@@ -13,13 +13,13 @@ class Dropdown {
     }
     handleOutput(target) {
         if (target.closest(`.${Dropdown.className}`)) return;
-        const dropdownsOpen = document.querySelectorAll(`.${Dropdown.classNameOpen}`);
+        const dropdownsOpen = document.querySelectorAll(`.${Dropdown.classNameOpened}`);
         if (!dropdownsOpen.length) return;
-        dropdownsOpen.forEach(element => element.classList.remove(Dropdown.classNameOpen));
+        dropdownsOpen.forEach(element => element.classList.remove(Dropdown.classNameOpened));
     }
     handleClick() {
         if (!this.btn.getAttribute(this.btnAttrStart)) this.btn.setAttribute(this.btnAttrStart, target.textContent);
-        this.element.classList.toggle(Dropdown.classNameOpen);
+        this.element.classList.toggle(Dropdown.classNameOpened);
     }
     handleChange() {
         const checkedLength = this.checkboxes.filter(cbx => cbx.checked).length;
@@ -35,5 +35,3 @@ class Dropdown {
         if (isMobile) document.addEventListener('click', (e) => Dropdown.prototype.handleOutput(e.target));
     }
 }
-
-export default Dropdown;

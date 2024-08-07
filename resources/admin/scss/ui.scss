@@ -38,6 +38,7 @@ ul.not-type {
     transition: background-color 0.3s linear;
     border-radius: 5px;
     padding: 8px;
+    color: $color;
 
     &:hover {
         background: $color;

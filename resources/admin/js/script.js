@@ -1,6 +1,7 @@
 // EditorJS
 import Dropdown from "./modules/Dropdown";
 import Popup from "./modules/Popup";
+import Spoiler from "./modules/Spoiler";
+import { startModules } from "./tools/functions";
 
-if (typeof Dropdown === 'function') Dropdown.prototype.start();
-if (typeof Popup === 'function') Popup.prototype.start();
+startModules(Dropdown, Popup, Spoiler);

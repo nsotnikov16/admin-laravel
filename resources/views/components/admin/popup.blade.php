@@ -2,11 +2,9 @@
     <div class="popup__container">
         <div class="popup__content">
             @isset($title)
-                <h3 class="popup__title">{{$title}}</h3>
+                <h3 class="popup__title">{{ $title }}</h3>
             @endisset
-            @isset($view)
-                @include($view, isset($props) && is_array($props) ? $props : [])
-            @endisset
+            {{ $slot }}
         </div>
         <div class="popup__close">&#x2715;</div>
     </div>

@@ -1,0 +1,17 @@
+.icon {
+    &-trash {
+        stroke: $color;
+    }
+
+    &-user {
+        stroke: $color;
+    }
+
+    &-settings {
+        fill: $color;
+    }
+
+    &-search {
+        fill: $color;
+    }
+}
