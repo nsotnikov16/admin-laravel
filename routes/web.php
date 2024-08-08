@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-
+/*
 Route::get('/', function () {
     app('admin')->title = 'Главная';
     return view('admin.main');
@@ -35,12 +35,8 @@ Route::get('/users', function () {
 Route::get('/users/groups', function () {
     app('admin')->title = 'Группы пользователей';
     return view('admin.users.groups');
-});
+}); */
 
-/*
-Route::get('/', function () {
-    return view('welcome');
-});
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -52,5 +48,5 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
-*/
+require __DIR__ . '/auth.php';
+require __DIR__ . '/admin.php';

@@ -179,3 +179,5 @@ ul.not-type {
        font-size: 15px;
     }
 }
+
+@include scrollBar('textarea');

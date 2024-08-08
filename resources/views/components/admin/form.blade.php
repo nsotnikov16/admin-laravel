@@ -1,5 +1,38 @@
-<form class="form">
-    <div class="form__row">
+<?php
+use Illuminate\Support\Str;
+?>
+<form method="{{ $method ?? 'GET' }}" action="{{ $action ?? '' }}" class="form">
+    @csrf
+    @foreach ($collection as $dto)
+        @php
+            $fieldId = Str::random(9);
+        @endphp
+
+        @switch($dto->type)
+            @case('text')
+                <div class="form__row {{ $dto->line ? 'form__row_line' : '' }}">
+                    <label for="{{ $fieldId }}" class="form__label">{{ $dto->label }}</label>
+                    <input id="{{ $fieldId }}" type="text" name="{{ $dto->name }}" placeholder="{{ $dto->placeholder }}"
+                        value="{{ $dto->value }}" class="form__field">
+                </div>
+            @break
+
+            @case('textarea')
+                <div class="form__row {{ $dto->line ? 'form__row_line' : '' }}">
+                    <label for="{{ $fieldId }}" class="form__label">{{ $dto->label }}</label>
+                    <textarea id="{{ $fieldId }}" name="{{ $dto->name }}" placeholder="{{ $dto->placeholder }}"
+                        value="{{ $dto->value }}" class="form__field" rows="{{ $dto->textareaRows }}"></textarea>
+                </div>
+            @break
+
+            @default
+        @endswitch
+    @endforeach
+
+    <div class="form__btns">
+        <button class="btn form__btn">Изменить</button>
+    </div>
+    {{--  <div class="form__row">
         <label for="#" class="form__label">Название</label>
         <input type="text" name="name" placeholder="Название" class="form__field">
     </div>
@@ -59,5 +92,5 @@
     </div>
     <div class="form__btns">
         <button class="btn form__btn">Изменить</button>
-    </div>
+    </div> --}}
 </form>

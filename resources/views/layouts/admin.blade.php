@@ -16,11 +16,11 @@
 <body>
     <div class="page">
         <x-admin.header />
-        <x-admin.sidebar />
+        <x-admin.sidebar :entities="$entities"/>
         <main class="main">
             <div class="container">
                 @if (!empty($breadcrumbs))
-                    <x-admin.breadcrumbs :items="$breadcrumbs"/>
+                    <x-admin.breadcrumbs :collection="$breadcrumbs"/>
                 @endif
                 <h1 class="title">{{ $title }}</h1>
                 {{ $slot }}

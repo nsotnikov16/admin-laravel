@@ -1,11 +1,10 @@
 <aside class="sidebar">
     <nav class="sidebar__nav">
-        <a href="#" class="sidebar__link scale active">Страницы</a>
-        <a href="#" class="sidebar__link scale">Меню</a>
-        <a href="#" class="sidebar__link scale">Новости</a>
-        <a href="#" class="sidebar__link scale">Блог</a>
-        <a href="#" class="sidebar__link scale">Контакты</a>
-        <a href="#" class="sidebar__link scale">Проекты</a>
-        <a href="#" class="sidebar__link scale">+ Добавить</a>
+        <a href="{{ route('admin.pages.index') }}" class="sidebar__link scale">Страницы</a>
+        @foreach ($entities as $entity)
+            <a href="{{ route('admin.entities.show', ['entity' => $entity['code']]) }}"
+                class="sidebar__link scale">{{ $entity['name'] }}</a>
+        @endforeach
+        <a href="{{ route('admin.entities.create') }}" class="sidebar__link scale">+ Добавить</a>
     </nav>
 </aside>

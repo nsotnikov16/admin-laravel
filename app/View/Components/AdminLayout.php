@@ -7,11 +7,10 @@ use Illuminate\View\Component;
 
 class AdminLayout extends Component
 {
-    public $title;
-
-    public function __construct($title = 'Default Title')
+    public array $entities = [];
+    public function __construct()
     {
-        $this->title = $title;
+        $this->entities = app('admin')->getEntities();
     }
 
     /**

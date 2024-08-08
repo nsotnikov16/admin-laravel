@@ -1,11 +1,11 @@
 <div class="breadcrumbs">
     <ul class="breadcrumbs__list">
-        @foreach ($items as $key => $item)
+        @foreach ($collection as $key => $dto)
             <li class="breadcrumbs__item">
-                @if ($key === count($items) - 1)
-                    <span href="#" class="breadcrumbs__link breadcrumbs__link_last">{{ $item['name'] }}</span>
+                @if ($key === count($collection) - 1)
+                    <span class="breadcrumbs__link breadcrumbs__link_last">{{ $dto->name }}</span>
                 @else
-                    <a href="{{ $item['link'] }}" class="breadcrumbs__link scale">{{ $item['name'] }}</a>
+                    <a href="{{ $dto->link }}" class="breadcrumbs__link scale">{{ $dto->name }}</a>
                 @endif
             </li>
         @endforeach
