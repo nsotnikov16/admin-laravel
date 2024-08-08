@@ -6,7 +6,7 @@ namespace Admin\Form\Domain\Dto;
 
 use Admin\Shared\Domain\Dto\Dto;
 
-class RowDto extends Dto
+class FormFieldDto extends Dto
 {
     const TYPE_TEXT = 'text';
     const TYPE_CHECKBOX = 'checkbox';

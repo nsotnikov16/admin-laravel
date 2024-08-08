@@ -22,8 +22,6 @@ class AdminSeeder extends Seeder
             ['name' => 'Перед </head>', 'code' => 'head_beforeend'],
             ['name' => 'После <body>', 'code' => 'body_afterbegin'],
             ['name' => 'Перед </body>', 'code' => 'body_beforeend'],
-            ['name' => 'robots.txt', 'code' => 'robots'],
-            ['name' => 'sitemap.xml', 'code' => 'sitemap'],
         ];
         foreach ($array as $item) {
             $insert = new Insert;

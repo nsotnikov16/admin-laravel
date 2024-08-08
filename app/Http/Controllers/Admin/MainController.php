@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\Admin\AdminController;
 
-class MainController extends Controller
+class MainController extends AdminController
 {
     public function __invoke()
     {

@@ -9,4 +9,5 @@ class Insert extends Model
 {
     use HasFactory;
     protected $table = 'sa_inserts';
+    protected $fillable = ['content'];
 }

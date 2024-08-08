@@ -30,11 +30,20 @@
     }
 
     &__btns {
-
     }
 
     &__btn {
         min-height: 50px;
         min-width: 200px;
+    }
+
+    &__validity {
+        &:invalid {
+            background: #ffcbcb;
+        }
+
+        &:valid {
+            background: #cce8cc;
+        }
     }
 }

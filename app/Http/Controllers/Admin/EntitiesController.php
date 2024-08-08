@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 
-class EntitiesController extends Controller
+use Illuminate\Http\Request;
+use App\Http\Controllers\Admin\AdminController;
+
+class EntitiesController extends AdminController
 {
     /**
      * Display a listing of the resource.

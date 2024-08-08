@@ -7,7 +7,7 @@ use App\Models\Admin\Insert;
 
 class AdminService {
     public string $title = '';
-    public BreadcrumbCollectionDto $breadcrumbs;
+    public $breadcrumbs;
 
     public function getEntities() {
         return Entity::all()->toArray();

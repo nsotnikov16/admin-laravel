@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Admin\AdminController;
 
-class PagesController extends Controller
+class PagesController extends AdminController
 {
     /**
      * Display a listing of the resource.
