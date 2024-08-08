@@ -11,6 +11,7 @@ body {
 
 @include scrollBar('body');
 .page {
+    background: $color2;
     display: grid;
     grid-template-columns: 320px 1fr;
     grid-template-areas:

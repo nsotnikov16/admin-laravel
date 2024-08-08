@@ -1,0 +1,47 @@
+.table {
+    border-collapse: separate;
+    border-spacing: 0;
+    width: 100%;
+    border-radius: 5px;
+    border: 1px solid $color;
+    &__head {
+        .table__row:first-child {
+            border-radius: 5px 5px 0 0;
+        }
+
+        .table__cell {
+            font-size: 16px;
+            font-weight: 600;
+        }
+    }
+
+    &__body {
+    }
+    &__row {
+        &:last-child:not(.table__head .table__row:last-child) {
+            .table__cell {
+                border-bottom: none;
+            }
+        }
+    }
+    &__cell {
+        padding: 5px;
+        text-align: center;
+        border-right: 1px solid $color;
+        border-bottom: 1px solid $color;
+        font-size: 14px;
+        &_edit {
+            width: 35px;
+            cursor: pointer;
+        }
+
+        &_trash {
+            width: 35px;
+            cursor: pointer;
+        }
+
+        &:last-child {
+            border-right: none;
+        }
+    }
+}

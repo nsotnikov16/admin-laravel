@@ -1,8 +1,13 @@
 <div class="breadcrumbs">
     <ul class="breadcrumbs__list">
-        <li class="breadcrumbs__item"><a href="#" class="breadcrumbs__link scale">Главная</a></li>
-        <li class="breadcrumbs__item"><a href="#" class="breadcrumbs__link scale">Новости</a></li>
-        <li class="breadcrumbs__item"><span href="#"
-                class="breadcrumbs__link breadcrumbs__link_last">Редактирование</span></li>
+        @foreach ($items as $key => $item)
+            <li class="breadcrumbs__item">
+                @if ($key === count($items) - 1)
+                    <span href="#" class="breadcrumbs__link breadcrumbs__link_last">{{ $item['name'] }}</span>
+                @else
+                    <a href="{{ $item['link'] }}" class="breadcrumbs__link scale">{{ $item['name'] }}</a>
+                @endif
+            </li>
+        @endforeach
     </ul>
 </div>
