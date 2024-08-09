@@ -1,6 +1,6 @@
-<?php
-use Illuminate\Support\Str;
-?>
+@php
+    use Illuminate\Support\Str;
+@endphp
 <form method="{{ $method ?? 'GET' }}" action="{{ $action ?? '' }}" class="form" data-form="{{ $type ?? '' }}">
     @csrf
     @foreach ($collection as $dto)

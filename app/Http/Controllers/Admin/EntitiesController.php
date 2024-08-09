@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Admin\AdminController;
+use Admin\Query\Domain\Dto\QueryDto;
 
 class EntitiesController extends AdminController
 {
@@ -13,7 +14,7 @@ class EntitiesController extends AdminController
      */
     public function index()
     {
-        //
+        $records = app('admin')->getRecords((new QueryDto)->setTable('sa_seo'));
     }
 
     /**

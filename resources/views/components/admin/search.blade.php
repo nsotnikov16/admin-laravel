@@ -9,5 +9,5 @@
 <form class="search">
     <div class="search__icon"><x-admin.icons.search></x-admin.icons.search></div>
     <input type="text" class="search__input" placeholder="Поиск">
-    <x-admin.dropdown addClass="search__dropdown" :items="$dropdownItems" btnText="По названию" />
+    <x-admin.dropdown addClass="search__dropdown" :items="$dropdownItems" btnText="По названию" :isRadio="true" />
 </form>

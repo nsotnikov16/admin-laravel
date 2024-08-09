@@ -19,7 +19,7 @@ return new class extends Migration
             $table->text('description');
             $table->text('subdomains');
             $table->boolean('active')->default(true);
-            $table->unsignedBigInteger('entity_id');
+            $table->unsignedBigInteger('entity_id')->nullable();
             $table->foreign('entity_id')->references('id')->on('sa_entities');
             $table->timestamps();
         });

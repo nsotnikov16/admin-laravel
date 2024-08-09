@@ -7,7 +7,7 @@ export default class Dropdown {
     constructor(element) {
         this.element = element;
         this.btn = this.element.querySelector(`[${this.btnAttr}]`);
-        this.checkboxes = Array.from(this.element.querySelectorAll('input[type="checkbox"]'));
+        this.choices = Array.from(this.element.querySelectorAll('input[type="checkbox"], input[type="radio"]'));
         this.handleChange();
         this.setListeners();
     }
@@ -22,12 +22,14 @@ export default class Dropdown {
         this.element.classList.toggle(Dropdown.classNameOpened);
     }
     handleChange() {
-        const checkedLength = this.checkboxes.filter(cbx => cbx.checked).length;
-        this.btn.textContent = checkedLength ? ('Выбрано: ' + checkedLength) : this.btn.getAttribute(this.btnAttrStart);
+        const checkedArr = this.choices.filter(item => item.checked);
+        const isRadio = this.choices.every(item => item.type === 'radio');
+        const textChecked = (isRadio ? checkedArr?.[0]?.labels?.[0].textContent : ('Выбрано: ' + checkedArr.length));
+        this.btn.textContent = checkedArr.length ? textChecked : this.btn.getAttribute(this.btnAttrStart);
     }
     setListeners() {
         if (isMobile) this.btn.addEventListener('click', this.handleClick.bind(this));
-        this.checkboxes.forEach(cbx => cbx.addEventListener('change', this.handleChange.bind(this)));
+        this.choices.forEach(item => item.addEventListener('change', this.handleChange.bind(this)));
     }
     start() {
         const dropdwons = document.querySelectorAll(`.${Dropdown.className}`);
