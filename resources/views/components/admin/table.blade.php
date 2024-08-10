@@ -28,3 +28,16 @@
         </table>
     @endif
 @endisset
+{{-- Для JS --}}
+<template id="template-cell-edit">
+    <td class="table__cell table__cell_edit"><x-admin.icons.edit /></td>
+</template>
+<template id="template-cell-trash">
+    <td class="table__cell table__cell_trash"><x-admin.icons.trash />
+</template>
+<template id="template-table">
+    <table class="table {{ $addClass ?? '' }}">
+        <thead class="table__head"></thead>
+        <tbody class="table__tbody"></tbody>
+    </table>
+</template>

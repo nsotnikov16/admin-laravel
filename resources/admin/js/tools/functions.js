@@ -32,7 +32,8 @@ export async function request(method = 'GET', url, data) {
 
         if (data instanceof FormData === false) {
             options.headers = {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest',
             }
         }
 
@@ -45,4 +46,38 @@ export async function request(method = 'GET', url, data) {
     }
 
     return result;
+}
+
+export function formDataToJSON(formData) {
+    const obj = {};
+    formData.forEach((value, key) => {
+        if (obj.hasOwnProperty(key)) {
+            if (!Array.isArray(obj[key])) obj[key] = [obj[key]];
+            obj[key].push(value);
+        } else {
+            obj[key] = value;
+        }
+    });
+    return JSON.stringify(obj);
+}
+
+// Функция для получения GET параметров из инпутов формы
+export function getFormParameters(formOrFormData) {
+    const formData = formOrFormData instanceof FormData ? formOrFormData : new FormData(formOrFormData);
+    const params = [];
+    for (const [key, value] of formData.entries()) {
+        params.push({ key, value });
+    }
+    return params;
+}
+
+export function updateUrlParams(params) {
+    const currentUrl = new URL(window.location.href);
+    const searchParams = currentUrl.searchParams;
+    params.forEach(({ key, value }) => {
+        searchParams.delete(key);
+        searchParams.set(key, value);
+        if (!value) searchParams.delete(key);
+    })
+    window.history.replaceState({}, '', currentUrl.toString());
 }

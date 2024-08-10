@@ -27,7 +27,14 @@ class AdminService
     {
         $dto->table ? ($query = DB::table($dto->table)) : ($query = new $dto->modelClass);
         $query = $query->orderBy($dto->sortBy, $dto->sortType);
-        $query = $dto->logicAnd ? $query->where($dto->filter) : $query->orWhere($dto->filter);
+        if (!empty($dto->filter)) {
+            foreach ($dto->filter as $key => $value) {
+                if (!is_array($value)) $value = [$value];
+                $query = $dto->logicAnd ? $query->whereIn($key, $value) : $query->orWhereIn($key, $value);
+            }
+        }
+
+        if ($dto->searchText !== '') $query = $query->where($dto->searchColumn, 'like', '%' . $dto->searchText . '%');
         $records = $query->select($dto->columns)->paginate($dto->limit);
         return $records;
     }

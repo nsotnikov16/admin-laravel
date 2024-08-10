@@ -11,6 +11,8 @@ class QueryDto extends Dto
     public string $sortBy = 'id';
     public string $sortType = 'asc';
     public array $filter = [];
+    public string $searchText = '';
+    public string $searchColumn = 'name';
     public int $limit = 100;
     public int $page = 1;
     public bool $logicAnd = true;
@@ -67,6 +69,18 @@ class QueryDto extends Dto
     public function setColumns(array $columns): self
     {
         $this->columns = $columns;
+        return $this;
+    }
+
+    public function setSearchText(string $searchText): self
+    {
+        $this->searchText = $searchText;
+        return $this;
+    }
+
+    public function setSearchColumn(string $searchColumn): self
+    {
+        $this->searchColumn = $searchColumn;
         return $this;
     }
 }

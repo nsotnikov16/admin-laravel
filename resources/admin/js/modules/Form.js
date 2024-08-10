@@ -1,4 +1,4 @@
-import { request } from "../tools/functions";
+import { request, formDataToJSON } from "../tools/functions";
 export default class Form {
     static attribute = 'data-form';
     defaultError = 'Произошла ошибка при отправке формы'
@@ -26,7 +26,7 @@ export default class Form {
         try {
             if (!this.isValid()) return;
             if (typeof this.beforeSubmit === 'function') this.beforeSubmit();
-            const json = Form.prototype.formDataToJSON(new FormData(this.form));
+            const json = formDataToJSON(new FormData(this.form));
             const result = await request(this.method, this.action, json);
             if (!result.success) throw new Error(result.message || result.error || this.defaultError);
             this.removeValidityClasses();
@@ -51,19 +51,6 @@ export default class Form {
         if (!this.fields.length) return;
         this.fields.forEach(field => field.addEventListener('input', () => this.handleInput(field)));
         this.form.addEventListener('submit', this.submit.bind(this));
-    }
-
-    formDataToJSON(formData) {
-        const obj = {};
-        formData.forEach((value, key) => {
-            if (obj.hasOwnProperty(key)) {
-                if (!Array.isArray(obj[key])) obj[key] = [obj[key]];
-                obj[key].push(value);
-            } else {
-                obj[key] = value;
-            }
-        });
-        return JSON.stringify(obj);
     }
 
     start() {

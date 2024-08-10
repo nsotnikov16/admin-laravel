@@ -255,4 +255,12 @@ abstract class Collection implements Countable, ArrayAccess, Iterator, JsonSeria
     {
         return array_values($this->items);
     }
+
+    /**
+     * @return T|null
+     */
+    public function first() {
+        if ($this->isNotEmpty()) return $this->all()[0];
+        return null;
+    }
 }

@@ -2,7 +2,7 @@
     <div class="rows">
         <div class="rows__top">
             <div class="rows__top-search">
-                <x-admin.search />
+                <x-admin.search :searchCollection="$dropdownSearch"/>
             </div>
             <div class="rows__top-btns">
                 <button class="btn" data-pointer="filter">Фильтр</button>
@@ -23,11 +23,13 @@
                 {{-- <p>Отображать по: 100, 250, 500</p> --}}
                 {{-- <x-admin.dropdown btnText="Поля" :items="[['ID', '']]"/> --}}
             </div>
-            <x-admin.table :head="$table['head']" :body="$table['body']" addClass="table_row" />
+            <div class="rows__table">
+                <x-admin.table :head="$table['head']" :body="$table['body']" addClass="table_rows" />
+            </div>
             <div class="pagination"></div>
         </div>
     </div>
-    <x-admin.popup id="filter" title="Фильтр">
+    <x-admin.popup id="filter" title="Фильтр" :filter="$filterColumns">
 
     </x-admin.popup>
     <x-admin.popup id="sort" title="Сортировка">
