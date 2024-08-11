@@ -14,10 +14,10 @@ return new class extends Migration
         Schema::create('sa_seo', function (Blueprint $table) {
             $table->id();
             $table->string('url')->unique();
-            $table->string('title');
-            $table->string('h1');
-            $table->text('description');
-            $table->text('subdomains');
+            $table->string('title')->nullable();
+            $table->string('h1')->nullable();
+            $table->text('description')->nullable();
+            $table->text('subdomains')->nullable();
             $table->boolean('active')->default(true);
             $table->unsignedBigInteger('entity_id')->nullable();
             $table->foreign('entity_id')->references('id')->on('sa_entities');

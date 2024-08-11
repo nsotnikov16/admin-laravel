@@ -16,10 +16,11 @@ class FormFieldDto extends Dto
     public string $type;
     public string $name;
     public string $label;
-    public ?string $value;
+    public ?string $value = '';
     public ?string $placeholder = '';
     public int $textareaRows = 10;
     public bool $line = false;
+    public bool $checked = false;
 
     public function setType(string $type): self
     {
@@ -60,6 +61,12 @@ class FormFieldDto extends Dto
     public function setLine(bool $line): self
     {
         $this->line = $line;
+        return $this;
+    }
+
+    public function setChecked(bool $checked): self
+    {
+        $this->checked = $checked;
         return $this;
     }
 }

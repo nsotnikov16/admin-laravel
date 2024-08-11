@@ -25,6 +25,16 @@
                 </div>
             @break
 
+            @case('checkbox')
+                <div class="form__row">
+                    <div class="checkbox">
+                        <input id="{{ $fieldId }}" type="checkbox" name="{{ $dto->name }}" class="checkbox__input"
+                            @checked($dto->checked) value="{{ $dto->value }}">
+                        <label for="{{ $fieldId }}" class="checkbox__label">{{ $dto->label }}</label>
+                    </div>
+                </div>
+            @break
+
             @default
         @endswitch
     @endforeach

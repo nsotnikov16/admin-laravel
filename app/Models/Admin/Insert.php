@@ -2,12 +2,10 @@
 
 namespace App\Models\Admin;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use App\Models\Admin\BaseModel;
 
-class Insert extends Model
+class Insert extends BaseModel
 {
-    use HasFactory;
     protected $table = 'sa_inserts';
     protected $fillable = ['content'];
 }

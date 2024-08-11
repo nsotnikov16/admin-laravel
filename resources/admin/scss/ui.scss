@@ -26,6 +26,10 @@ ul.not-type {
     list-style-type: none;
 }
 
+.d-none {
+    display: none;
+}
+
 .btn {
     cursor: pointer;
     border: 1px solid $color;

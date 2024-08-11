@@ -2,11 +2,10 @@
 
 namespace App\Models\Admin;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use App\Models\Admin\BaseModel;
 
-class Page extends Model
+
+class Page extends BaseModel
 {
-    use HasFactory;
     protected $table = 'sa_pages';
 }

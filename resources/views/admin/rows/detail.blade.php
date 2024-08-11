@@ -1,5 +1,7 @@
 <x-admin-layout>
-    <div class="row">
-        <x-admin.form />
-    </div>
+    <x-admin.form :collection="$collection" :method="$method ?? 'GET'" :action="$action">
+        <div class="form__btns">
+            <button class="btn form__btn">{{ $btnText }}</button>
+        </div>
+    </x-admin.form>
 </x-admin-layout>

@@ -2,34 +2,29 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Admin\Breadcrumbs\Domain\Dto\BreadcrumbCollectionDto;
-use Admin\Breadcrumbs\Domain\Dto\BreadcrumbDto;
-use Admin\Dropdown\Domain\Dto\DropdownItemDto;
-use Admin\Dropdown\Domain\Dto\DropdownCollectionDto;
+use App\Models\Admin\Seo;
+use Illuminate\Http\Request;
 use Admin\Query\Domain\Dto\QueryDto;
 use Admin\Shared\Domain\Dto\ResultDto;
-use Illuminate\Http\Request;
+use Admin\Dropdown\Domain\Dto\DropdownItemDto;
+use Admin\Breadcrumbs\Domain\Dto\BreadcrumbDto;
 use App\Http\Controllers\Admin\AdminController;
-use App\Models\Admin\Seo;
+use Admin\Form\Domain\Dto\FormFieldCollectionDto;
+use Admin\Dropdown\Domain\Dto\DropdownCollectionDto;
+use Admin\Breadcrumbs\Domain\Dto\BreadcrumbCollectionDto;
+use Admin\Form\Domain\Dto\FormFieldDto;
 
 class SeoController extends AdminController
 {
+
+    protected $columns = [];
+
     /**
      * Display a listing of the resource.
      */
     public function index(Request $request)
     {
-        $columns = [
-            'id' => 'ID',
-            'url' => 'URL',
-            'title' => 'title',
-            'h1' => 'h1',
-            'description' => 'description',
-            'active' => 'Активность',
-            'entity_id' => 'Привязка',
-            'created_at' => 'Дата создания',
-            'updated_at' => 'Дата обновления'
-        ];
+        $columns = Seo::getColumns();
 
         $query =  (new QueryDto)
             ->setModelClass(Seo::class)
@@ -86,9 +81,10 @@ class SeoController extends AdminController
             'active' => 'Активность',
             'entity_id' => 'Привязка',
         ];
+        $addRoute = route('admin.seo.create');
 
         $table = app('admin')->getPropTable($result->all(), $columns);
-        return view('admin.rows.list', compact('table', 'count', 'total', 'dropdownSearch', 'filterColumns'));
+        return view('admin.rows.list', compact('table', 'count', 'total', 'dropdownSearch', 'filterColumns', 'addRoute'));
     }
 
     /**
@@ -96,7 +92,26 @@ class SeoController extends AdminController
      */
     public function create()
     {
-        //
+        app('admin')->title = 'Добавление SEO для страницы';
+        app('admin')->breadcrumbs = new BreadcrumbCollectionDto([
+            (new BreadcrumbDto)->setName('Главная')->setLink(route('admin.main')),
+            (new BreadcrumbDto)->setName('SEO')->setLink(route('admin.seo.index')),
+            (new BreadcrumbDto)->setName(app('admin')->title)
+        ]);
+
+        $fields = [];
+        foreach (Seo::getColumns() as $key => $value) {
+            if (in_array($key, ['id', 'created_at', 'updated_at'])) continue;
+            $dto =  (new FormFieldDto())->setName($key)->setLabel($value)->setType(FormFieldDto::TYPE_TEXT);
+            if ($key === 'active') $dto = $dto->setValue(1)->setChecked(true)->setType(FormFieldDto::TYPE_CHECKBOX);
+            $fields[] = $dto;
+        }
+
+        $collection = new FormFieldCollectionDto($fields);
+        $action = route('admin.seo.store');
+        $method = 'POST';
+        $btnText = 'Добавить';
+        return view('admin.rows.detail', compact('collection', 'action', 'btnText', 'method'));
     }
 
     /**
@@ -104,23 +119,51 @@ class SeoController extends AdminController
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'url' => 'required|unique:sa_seo|max:500',
+            'title' => 'max:255',
+            'h1' => 'max:100',
+            'description' => 'max:255',
+        ]);
+        $model = Seo::create($request->all());
+        $model->save();
+
+        $result = (new ResultDto())->setSuccess(true);
+        return $this->respond($result);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
-    {
-        //
-    }
+    public function show(string $id) {}
 
     /**
      * Show the form for editing the specified resource.
      */
     public function edit(string $id)
     {
-        //
+        app('admin')->title = 'Редактирование SEO для страницы';
+        app('admin')->breadcrumbs = new BreadcrumbCollectionDto([
+            (new BreadcrumbDto)->setName('Главная')->setLink(route('admin.main')),
+            (new BreadcrumbDto)->setName('SEO')->setLink(route('admin.seo.index')),
+            (new BreadcrumbDto)->setName(app('admin')->title)
+        ]);
+
+        $model = Seo::find($id);
+
+        $fields = [];
+        foreach (Seo::getColumns() as $key => $value) {
+            if (in_array($key, ['id', 'created_at', 'updated_at'])) continue;
+            $dto =  (new FormFieldDto())->setName($key)->setLabel($value)->setType(FormFieldDto::TYPE_TEXT)->setValue($model[$key]);
+            if ($key === 'active') $dto = $dto->setValue($model[$key])->setChecked(true)->setType(FormFieldDto::TYPE_CHECKBOX);
+            $fields[] = $dto;
+        }
+
+        $collection = new FormFieldCollectionDto($fields);
+        $action = route('admin.seo.update', ['seo' => $id]);
+        $method = 'PUT';
+        $btnText = 'Изменить';
+        return view('admin.rows.detail', compact('collection', 'action', 'btnText', 'method'));
     }
 
     /**
@@ -128,7 +171,18 @@ class SeoController extends AdminController
      */
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+            'url' => 'required|unique:sa_seo|max:500',
+            'title' => 'max:255',
+            'h1' => 'max:100',
+            'description' => 'max:255',
+        ]);
+        $model = Seo::find($id);
+        $model->update($request->all());
+        $model->save();
+
+        $result = (new ResultDto())->setSuccess(true);
+        return $this->respond($result);
     }
 
     /**
