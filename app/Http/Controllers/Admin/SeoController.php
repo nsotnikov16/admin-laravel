@@ -156,14 +156,14 @@ class SeoController extends AdminController
      */
     public function edit(string $id)
     {
-        app('admin')->title = 'Редактирование SEO для страницы';
+        $model = Seo::find($id);
+
+        app('admin')->title = 'Редактирование SEO для страницы ' . $model->url;
         app('admin')->breadcrumbs = new BreadcrumbCollectionDto([
             (new BreadcrumbDto)->setName('Главная')->setLink(route('admin.main')),
             (new BreadcrumbDto)->setName('SEO')->setLink(route('admin.seo.index')),
-            (new BreadcrumbDto)->setName(app('admin')->title)
+            (new BreadcrumbDto)->setName('Редактирование SEO для страницы')
         ]);
-
-        $model = Seo::find($id);
 
         $fields = [];
         foreach (Seo::getColumns() as $key => $value) {

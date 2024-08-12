@@ -31,12 +31,15 @@ export default class Form {
             if (!result.success) throw new Error(result.message || result.error || this.defaultError);
             this.removeValidityClasses();
             alert(result.message ?? this.defaultSuccess);
-            if (typeof this.afterSuccess === 'function') this.afterSuccess(result);
+            window.location.reload();
+            //if (typeof this.afterSuccess === 'function') this.afterSuccess(result);
         } catch (error) {
             result = { success: false, message: error.message };
             alert(error.message ?? this.defaultError);
         }
-        if (typeof this.afterSubmit === 'function') this.afterSubmit(result);
+
+
+        //if (typeof this.afterSubmit === 'function') this.afterSubmit(result);
         return result;
     }
 
@@ -52,10 +55,6 @@ export default class Form {
         if (!this.fields.length) return;
         this.fields.forEach(field => field.addEventListener('input', () => this.handleInput(field)));
         this.form.addEventListener('submit', this.submit.bind(this));
-    }
-
-    afterSuccess(result) {
-        if (this.type !== 'inserts') this.form.reset();
     }
 
     start() {
