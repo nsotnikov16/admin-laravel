@@ -7,4 +7,4 @@ import Search from "./modules/Search";
 import TableRows from "./modules/TableRows";
 import { startModules } from "./tools/functions";
 
-startModules(Dropdown, Popup, Spoiler, Form, Search, TableRows);
+startModules(Dropdown, Popup, Spoiler, Form, TableRows, Search);

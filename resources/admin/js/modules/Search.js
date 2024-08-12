@@ -42,10 +42,8 @@ export default class Search {
     }
 
     logicListPage() {
-        if (!document.querySelector('.rows__table')) return;
-        this.callback = (result) => {
-            const tableObject = new TableRows();
-            tableObject.create(result.data.head, result.data.data, result.data.total);
-        }
+        const getRowsBottom = () => document.querySelector('.rows__bottom');
+        if (!getRowsBottom()) return;
+        this.callback = (result) => getRowsBottom().innerHTML = result.data.html
     }
 }

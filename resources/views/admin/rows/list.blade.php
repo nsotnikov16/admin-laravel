@@ -11,29 +11,9 @@
             </div>
         </div>
         <div class="rows__bottom">
-            <div>
-                <p data-result-rows>
-                    @if ($count > 0)
-                        Найдено: {{ $count }} из {{ $total }}
-                    @else
-                        Ничего не найдено
-                    @endif
-                </p>
-                {{--  @isset($count, $total)
-                    @if ($count > 0)
-                        <p>Найдено: {{ $count }} из {{ $total }}</p>
-                    @else
-                        <p>Ничего не найдено</p>
-                    @endif
-                @endisset --}}
-
-                {{-- <p>Отображать по: 100, 250, 500</p> --}}
-                {{-- <x-admin.dropdown btnText="Поля" :items="[['ID', '']]"/> --}}
-            </div>
-            <div class="rows__table">
-                <x-admin.table :head="$table['head']" :body="$table['body']" addClass="table_rows" />
-            </div>
-            <div class="pagination"></div>
+            @include('admin.rows.bottom', compact('count', 'total', 'table', 'templateLinkEdit', 'templateLinkDelete'))
+            {{-- <x-admin.rows.bottom :count="$count" :total="$total" :table="$table" :templateLinkEdit="$templateLinkEdit"
+                :templateLinkDelete="$templateLinkDelete" /> --}}
         </div>
     </div>
     <x-admin.popup id="filter" title="Фильтр" :filter="$filterColumns">

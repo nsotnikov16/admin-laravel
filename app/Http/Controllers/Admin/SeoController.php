@@ -16,7 +16,6 @@ use Admin\Form\Domain\Dto\FormFieldDto;
 
 class SeoController extends AdminController
 {
-
     protected $columns = [];
 
     /**
@@ -42,14 +41,22 @@ class SeoController extends AdminController
         $result = app('admin')->getRecords($query);
         $count = $result->count();
         $total = $result->total();
+        $addRoute = route('admin.seo.create');
+        $templateLinkEdit = route('admin.seo.edit', ['seo' => '#id#']);
+        $templateLinkDelete = route('admin.seo.destroy', ['seo' => '#id#']);
+
+        $table = app('admin')->getPropTable($result->all(), $columns, $templateLinkEdit, $templateLinkDelete);
 
         if ($request->ajax()) {
             $result = (new ResultDto)->setSuccess(true)
                 ->setData([
-                    'data' => app('admin')->modifyRecords($result->all()),
-                    'head' => array_values($columns),
-                    'count' => $count,
-                    'total' => $total
+                    'html' => view('admin.rows.bottom', compact(
+                        'table',
+                        'count',
+                        'total',
+                        'templateLinkEdit',
+                        'templateLinkDelete',
+                    ))->render()
                 ]);
             return $this->respond($result);
         }
@@ -81,10 +88,17 @@ class SeoController extends AdminController
             'active' => 'Активность',
             'entity_id' => 'Привязка',
         ];
-        $addRoute = route('admin.seo.create');
 
-        $table = app('admin')->getPropTable($result->all(), $columns);
-        return view('admin.rows.list', compact('table', 'count', 'total', 'dropdownSearch', 'filterColumns', 'addRoute'));
+        return view('admin.rows.list', compact(
+            'table',
+            'count',
+            'total',
+            'dropdownSearch',
+            'filterColumns',
+            'addRoute',
+            'templateLinkEdit',
+            'templateLinkDelete',
+        ));
     }
 
     /**
@@ -171,8 +185,10 @@ class SeoController extends AdminController
      */
     public function update(Request $request, string $id)
     {
+
+
         $request->validate([
-            'url' => 'required|unique:sa_seo|max:500',
+            'url' => 'required|unique:sa_seo,url,' . $id . '|max:500',
             'title' => 'max:255',
             'h1' => 'max:100',
             'description' => 'max:255',
@@ -190,6 +206,9 @@ class SeoController extends AdminController
      */
     public function destroy(string $id)
     {
-        //
+        $model = Seo::find($id);
+        $model->delete();
+        $result = (new ResultDto())->setSuccess(true);
+        return $this->respond($result);
     }
 }
