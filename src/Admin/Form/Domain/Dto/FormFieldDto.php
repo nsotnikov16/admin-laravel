@@ -10,6 +10,7 @@ class FormFieldDto extends Dto
 {
     const TYPE_TEXT = 'text';
     const TYPE_CHECKBOX = 'checkbox';
+    const TYPE_DROPDOWN = 'dropdown';
     const TYPE_TEXTAREA = 'textarea';
     const TYPE_HTML = 'html';
 
@@ -17,10 +18,12 @@ class FormFieldDto extends Dto
     public string $name;
     public string $label;
     public ?string $value = '';
+    public $collection = [];
     public ?string $placeholder = '';
     public int $textareaRows = 10;
     public bool $line = false;
     public bool $checked = false;
+    public bool $multiple = false;
 
     public function setType(string $type): self
     {
@@ -46,6 +49,12 @@ class FormFieldDto extends Dto
         return $this;
     }
 
+    public function setCollection($collection): self
+    {
+        $this->collection = $collection;
+        return $this;
+    }
+
     public function setPlaceholder(?string $placeholder): self
     {
         $this->placeholder = $placeholder;
@@ -67,6 +76,12 @@ class FormFieldDto extends Dto
     public function setChecked(bool $checked): self
     {
         $this->checked = $checked;
+        return $this;
+    }
+
+    public function setMultiple(bool $multiple): self
+    {
+        $this->multiple = $multiple;
         return $this;
     }
 }

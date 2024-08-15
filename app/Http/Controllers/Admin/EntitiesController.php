@@ -14,7 +14,7 @@ class EntitiesController extends AdminController
      */
     public function index()
     {
-        $records = app('admin')->getRecords((new QueryDto)->setTable('sa_seo'));
+
     }
 
     /**

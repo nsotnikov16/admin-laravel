@@ -74,6 +74,8 @@ export function getFormParameters(formOrFormData) {
 export function updateUrlParams(params) {
     const currentUrl = new URL(window.location.href);
     const searchParams = currentUrl.searchParams;
+    params = params.filter(({ key }) => key !== '_token')
+    console.log(params);
     params.forEach(({ key, value }) => {
         searchParams.delete(key);
         searchParams.set(key, value);

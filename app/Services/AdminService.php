@@ -6,6 +6,8 @@ use App\Models\Admin\Entity;
 use App\Models\Admin\Insert;
 use Illuminate\Support\Facades\DB;
 use Admin\Query\Domain\Dto\QueryDto;
+use Admin\Breadcrumbs\Domain\Dto\BreadcrumbCollectionDto;
+use Admin\Breadcrumbs\Domain\Dto\BreadcrumbDto;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 
 class AdminService

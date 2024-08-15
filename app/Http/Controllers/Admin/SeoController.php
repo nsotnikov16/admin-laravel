@@ -80,21 +80,62 @@ class SeoController extends AdminController
 
         app('admin')->title = 'SEO';
         app('admin')->breadcrumbs = new BreadcrumbCollectionDto([
-            (new BreadcrumbDto)->setName('Главная')->setLink('/'),
+            (new BreadcrumbDto)->setName('Главная')->setLink(route('admin.main')),
             (new BreadcrumbDto)->setName('SEO'),
         ]);
 
-        $filterColumns = [
-            'active' => 'Активность',
-            'entity_id' => 'Привязка',
-        ];
+        $filterFields = new FormFieldCollectionDto([
+            (new FormFieldDto)->setType(FormFieldDto::TYPE_DROPDOWN)
+                ->setLabel('Активность')
+                ->setLine(true)
+                ->setCollection((new DropdownCollectionDto([
+                    (new DropdownItemDto)->setName('filter[active]')
+                        ->setValue('1')
+                        ->setLabel('Да')
+                        ->setChecked($request->filter ? $request->filter['active'] == 1 : false),
+                    (new DropdownItemDto)->setName('filter[active]')
+                        ->setValue('0')
+                        ->setLabel('Нет')
+                        ->setChecked($request->filter ? $request->filter['active'] == 0 : false)
+                ]))->setIsRadio(true))
+        ]);
+
+        $sortFields = new FormFieldCollectionDto([
+            (new FormFieldDto)->setType(FormFieldDto::TYPE_DROPDOWN)
+                ->setLabel('Поле')
+                ->setLine(true)
+                ->setCollection((new DropdownCollectionDto([
+                    (new DropdownItemDto)->setName('sortBy')
+                        ->setValue('id')
+                        ->setLabel('Идентификатор (id)')
+                        ->setChecked($request->sortBy === 'id'),
+                    (new DropdownItemDto)->setName('sortBy')
+                        ->setValue('url')
+                        ->setLabel('URL')
+                        ->setChecked($request->sortBy === 'url')
+                ]))->setIsRadio(true)->setButtonText('Выберите поле')),
+            (new FormFieldDto)->setType(FormFieldDto::TYPE_DROPDOWN)
+                ->setLabel('Тип')
+                ->setLine(true)
+                ->setCollection((new DropdownCollectionDto([
+                    (new DropdownItemDto)->setName('sortType')
+                        ->setValue('asc')
+                        ->setLabel('По возрастанию')
+                        ->setChecked($request->sortType === 'asc'),
+                    (new DropdownItemDto)->setName('sortType')
+                        ->setValue('desc')
+                        ->setLabel('По убыванию')
+                        ->setChecked($request->sortType === 'desc')
+                ]))->setIsRadio(true)->setButtonText('Выберите тип'))
+        ]);
 
         return view('admin.rows.list', compact(
             'table',
             'count',
             'total',
             'dropdownSearch',
-            'filterColumns',
+            'filterFields',
+            'sortFields',
             'addRoute',
             'templateLinkEdit',
             'templateLinkDelete',
@@ -142,7 +183,7 @@ class SeoController extends AdminController
         $model = Seo::create($request->all());
         $model->save();
 
-        $result = (new ResultDto())->setSuccess(true);
+        $result = (new ResultDto())->setSuccess(true)->setRedirect(route('admin.seo.index'));
         return $this->respond($result);
     }
 

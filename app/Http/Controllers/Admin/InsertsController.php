@@ -18,9 +18,8 @@ class InsertsController extends AdminController
         $inserts = app('admin')->getInserts();
 
         app('admin')->title = 'Вставки';
-
         app('admin')->breadcrumbs = new BreadcrumbCollectionDto([
-            (new BreadcrumbDto())->setName('Главная')->setLink('/'),
+            (new BreadcrumbDto())->setName('Главная')->setLink(route('admin.main')),
             (new BreadcrumbDto())->setName('Вставки'),
         ]);
 

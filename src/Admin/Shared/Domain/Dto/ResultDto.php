@@ -12,6 +12,7 @@ class ResultDto extends Dto
     public ?string $error;
     public ?string $message;
     public ?array $data;
+    public ?string $redirect;
 
     public function setSuccess(bool $boolean): self
     {
@@ -34,6 +35,12 @@ class ResultDto extends Dto
     public function setData(array $data): self
     {
         $this->data = $data;
+        return $this;
+    }
+
+    public function setRedirect(string $redirect): self
+    {
+        $this->redirect = $redirect;
         return $this;
     }
 }

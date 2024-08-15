@@ -8,35 +8,36 @@
             $fieldId = Str::random(9);
         @endphp
 
-        @switch($dto->type)
-            @case('text')
-                <div class="form__row {{ $dto->line ? 'form__row_line' : '' }}">
+        <div class="form__row {{ $dto->line ? 'form__row_line' : '' }}">
+            @switch($dto->type)
+                @case('text')
                     <label for="{{ $fieldId }}" class="form__label">{{ $dto->label }}</label>
                     <input id="{{ $fieldId }}" type="text" name="{{ $dto->name }}" placeholder="{{ $dto->placeholder }}"
                         value="{{ $dto->value }}" class="form__field">
-                </div>
-            @break
+                @break
 
-            @case('textarea')
-                <div class="form__row {{ $dto->line ? 'form__row_line' : '' }}">
+                @case('textarea')
                     <label for="{{ $fieldId }}" class="form__label">{{ $dto->label }}</label>
                     <textarea id="{{ $fieldId }}" name="{{ $dto->name }}" placeholder="{{ $dto->placeholder }}"
                         class="form__field" rows="{{ $dto->textareaRows }}">{{ $dto->value }}</textarea>
-                </div>
-            @break
+                @break
 
-            @case('checkbox')
-                <div class="form__row">
+                @case('checkbox')
                     <div class="checkbox">
                         <input id="{{ $fieldId }}" type="checkbox" name="{{ $dto->name }}" class="checkbox__input"
                             @checked($dto->checked) value="{{ $dto->value }}">
                         <label for="{{ $fieldId }}" class="checkbox__label">{{ $dto->label }}</label>
                     </div>
-                </div>
-            @break
+                @break
 
-            @default
-        @endswitch
+                @case('dropdown')
+                    <label for="{{ $fieldId }}" class="form__label">{{ $dto->label }}</label>
+                    <x-admin.dropdown addClass="search__dropdown" :collection="$dto->collection" />
+                @break
+
+                @default
+            @endswitch
+        </div>
     @endforeach
 
     {{ $slot }}
