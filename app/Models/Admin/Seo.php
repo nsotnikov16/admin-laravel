@@ -31,14 +31,4 @@ class Seo extends BaseModel
             (new FieldDto)->setName('entity_id')->setLabel('Привязка')->setType(FieldDto::TYPE_DROPDOWN)->setCollection(new DropdownCollectionDto([])),
         ]);
     }
-
-    public function getFieldsWithValues() {
-        $fields = self::getFields();
-        foreach ($fields as $key => $field) {
-            $fields[$key]->setValue($this[$field->name]);
-            if ($field->name === 'active') $fields[$key]->setValue('1');
-            $fields[$key]->setChecked((bool) $this[$field->name]);
-        }
-        return $fields;
-    }
 }

@@ -22,21 +22,7 @@ class SeoController extends AdminController
     public function index(Request $request)
     {
         $fields = Seo::getFields();
-
-        $query =  (new QueryDto)
-            ->setModelClass(Seo::class)
-            ->setColumns($fields->keysByField('name'))
-            ->setLogicAnd(false);
-
-        if ($request->sortBy && $request->sortType) {
-            $query = $query->setSortBy($request->sortBy)->setSortType($request->sortType);
-        }
-
-        if ($request->search && $request->column) $query = $query->setSearchColumn($request->column)->setSearchText($request->search);
-
-        if ($request->filter) $query = $query->setFilter($request->filter);
-
-        $result = app('admin')->getRecords($query);
+        $result = app('admin')->getRecords(Seo::class, $fields);
         $count = $result->count();
         $total = $result->total();
         $addRoute = route('admin.seo.create');
@@ -152,7 +138,7 @@ class SeoController extends AdminController
             (new BreadcrumbDto)->setName(app('admin')->title)
         ]);
 
-        $collection = Seo::getFields();
+        $collection = Seo::getFieldsForCreate();
         $action = route('admin.seo.store');
         $method = 'POST';
         $btnText = 'Добавить';
@@ -216,6 +202,7 @@ class SeoController extends AdminController
         ]);
         $model = Seo::find($id);
         $model->update($request->all());
+        $model->active = (bool) $request->active;
         $model->save();
 
         $result = (new ResultDto())->setSuccess(true);

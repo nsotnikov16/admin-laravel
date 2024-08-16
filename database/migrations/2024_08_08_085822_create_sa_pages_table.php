@@ -14,14 +14,14 @@ return new class extends Migration
         Schema::create('sa_pages', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('h1');
-            $table->string('title');
-            $table->text('description');
-            $table->text('content');
+            $table->string('h1')->nullable();
+            $table->string('title')->nullable();
+            $table->text('description')->nullable();
+            $table->text('content')->nullable();
             $table->boolean('active')->default(true);
             $table->string('url')->unique();
-            $table->text('subdomains');
-            $table->integer('parent_id');
+            $table->text('subdomains')->nullable();
+            $table->integer('parent_id')->nullable();
             $table->timestamps();
         });
     }

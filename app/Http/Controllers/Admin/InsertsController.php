@@ -31,7 +31,8 @@ class InsertsController extends AdminController
                 ->setName($insert->code)
                 ->setLabel($insert->name)
                 ->setTextareaRows(20)
-                ->setValue($insert->content);
+                ->setValue($insert->content)
+                ->setLine(false);
         }
 
         $collection = new FieldCollectionDto($items);

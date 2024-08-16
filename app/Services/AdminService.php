@@ -2,13 +2,15 @@
 
 namespace App\Services;
 
+use App\Models\Admin\Seo;
 use App\Models\Admin\Entity;
 use App\Models\Admin\Insert;
 use Illuminate\Support\Facades\DB;
 use Admin\Query\Domain\Dto\QueryDto;
-use Admin\Breadcrumbs\Domain\Dto\BreadcrumbCollectionDto;
-use Admin\Breadcrumbs\Domain\Dto\BreadcrumbDto;
+use Admin\Field\Domain\Dto\FieldCollectionDto;
 use Admin\Shared\Domain\Collection\Collection;
+use Admin\Breadcrumbs\Domain\Dto\BreadcrumbDto;
+use Admin\Breadcrumbs\Domain\Dto\BreadcrumbCollectionDto;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 
 class AdminService
@@ -26,8 +28,32 @@ class AdminService
         return Insert::all();
     }
 
-    public function getRecords(QueryDto $dto)
+    public function getQueryDto(string $tableOrClass, FieldCollectionDto $fields,  $logicAnd = false): QueryDto
     {
+        $request = request();
+        $query =  (new QueryDto);
+
+        if (class_exists($tableOrClass)) {
+            $query = $query->setModelClass($tableOrClass);
+        } else {
+            $query =  $query->setTable($tableOrClass);
+        }
+
+        $query = $query->setColumns($fields->keysByField('name'))->setLogicAnd($logicAnd);
+
+        if ($request->sortBy && $request->sortType) {
+            $query = $query->setSortBy($request->sortBy)->setSortType($request->sortType);
+        }
+
+        if ($request->search && $request->column) $query = $query->setSearchColumn($request->column)->setSearchText($request->search);
+
+        if ($request->filter) $query = $query->setFilter($request->filter);
+        return $query;
+    }
+
+    public function getRecords(string $tableOrClass, FieldCollectionDto $fields,  $logicAnd = false)
+    {
+        $dto = $this->getQueryDto($tableOrClass, $fields, $logicAnd);
         $dto->table ? ($query = DB::table($dto->table)) : ($query = new $dto->modelClass);
         $query = $query->orderBy($dto->sortBy, $dto->sortType);
         if (!empty($dto->filter)) {

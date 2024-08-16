@@ -18,8 +18,6 @@
             @include(
                 'admin.rows.bottom',
                 compact('count', 'total', 'table', 'templateLinkEdit', 'templateLinkDelete'))
-            {{-- <x-admin.rows.bottom :count="$count" :total="$total" :table="$table" :templateLinkEdit="$templateLinkEdit"
-                :templateLinkDelete="$templateLinkDelete" /> --}}
         </div>
     </div>
     @isset($filterFields)
