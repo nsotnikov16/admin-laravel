@@ -155,9 +155,9 @@ class SeoController extends AdminController
         ]);
 
         $fields = [];
-        foreach (Seo::getColumns() as $key => $value) {
+        foreach (Seo::getColumns() as $key => $item) {
             if (in_array($key, ['id', 'created_at', 'updated_at'])) continue;
-            $dto =  (new FormFieldDto())->setName($key)->setLabel($value)->setType(FormFieldDto::TYPE_TEXT);
+            $dto =  (new FormFieldDto())->setName($key)->setLabel($item['name'])->setType(FormFieldDto::TYPE_TEXT);
             if ($key === 'active') $dto = $dto->setValue(1)->setChecked(true)->setType(FormFieldDto::TYPE_CHECKBOX);
             $fields[] = $dto;
         }
@@ -207,10 +207,14 @@ class SeoController extends AdminController
         ]);
 
         $fields = [];
-        foreach (Seo::getColumns() as $key => $value) {
+        foreach (Seo::getColumns() as $key => $item) {
             if (in_array($key, ['id', 'created_at', 'updated_at'])) continue;
-            $dto =  (new FormFieldDto())->setName($key)->setLabel($value)->setType(FormFieldDto::TYPE_TEXT)->setValue($model[$key]);
-            if ($key === 'active') $dto = $dto->setValue($model[$key])->setChecked(true)->setType(FormFieldDto::TYPE_CHECKBOX);
+
+            $dto =  (new FormFieldDto())->setName($key)
+                ->setLabel($item['name'])
+                ->setType($item['type'])
+                ->setValue($model[$key] ?? $item['default'])
+                ->setChecked((bool) $model[$key] ?? $item['default']);
             $fields[] = $dto;
         }
 

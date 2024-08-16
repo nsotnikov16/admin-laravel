@@ -67,7 +67,7 @@ class AdminService
     public function getPropTable(array $items, array $columns = [], string $templateLinkEdit, string $templateLinkDelete): array
     {
         return [
-            'head' => array_values($columns),
+            'head' => array_map(fn($item) => $item['name'], $columns),
             'body' => $this->modifyRecords($items, function ($record) use ($templateLinkEdit, $templateLinkDelete) {
                 $record['editLink'] = str_replace('#id#', $record['id'], $templateLinkEdit);
                 $record['deleteLink'] = str_replace('#id#', $record['id'], $templateLinkDelete);

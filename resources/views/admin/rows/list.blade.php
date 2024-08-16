@@ -5,8 +5,12 @@
                 <x-admin.search :searchCollection="$dropdownSearch" />
             </div>
             <div class="rows__top-btns">
-                <button class="btn" data-pointer="filter">Фильтр</button>
-                <button class="btn" data-pointer="sort">Сортировка</button>
+                @isset($filterFields)
+                    <button class="btn" data-pointer="filter">Фильтр</button>
+                @endisset
+                @isset($sortFields)
+                    <button class="btn" data-pointer="sort">Сортировка</button>
+                @endisset
                 <a href="{{ $addRoute }}" class="btn btn_bg">Добавить</a>
             </div>
         </div>
@@ -18,20 +22,26 @@
                 :templateLinkDelete="$templateLinkDelete" /> --}}
         </div>
     </div>
-    <x-admin.popup id="filter" title="Фильтр">
-        <x-admin.form :collection="$filterFields" type="filter">
-            <div class="form__btns">
-               {{--  <button type="button" class="btn form__btn" data-reset-btn>Сбросить</button> --}}
-                <button type="submit" class="btn form__btn">Применить</button>
-            </div>
-        </x-admin.form>
-    </x-admin.popup>
-    <x-admin.popup id="sort" title="Сортировка">
-        <x-admin.form :collection="$sortFields" type="sort">
-            <div class="form__btns">
-               {{--  <button type="button" class="btn form__btn" data-reset-btn>Сбросить</button> --}}
-                <button type="submit" class="btn form__btn">Применить</button>
-            </div>
-        </x-admin.form>
-    </x-admin.popup>
+    @isset($filterFields)
+        <x-admin.popup id="filter" title="Фильтр">
+            <x-admin.form :collection="$filterFields" type="filter">
+                <div class="form__btns">
+                    {{--  <button type="button" class="btn form__btn" data-reset-btn>Сбросить</button> --}}
+                    <button type="submit" class="btn form__btn">Применить</button>
+                </div>
+            </x-admin.form>
+        </x-admin.popup>
+    @endisset
+
+    @isset($sortFields)
+        <x-admin.popup id="sort" title="Сортировка">
+            <x-admin.form :collection="$sortFields" type="sort">
+                <div class="form__btns">
+                    {{--  <button type="button" class="btn form__btn" data-reset-btn>Сбросить</button> --}}
+                    <button type="submit" class="btn form__btn">Применить</button>
+                </div>
+            </x-admin.form>
+        </x-admin.popup>
+    @endisset
+
 </x-admin-layout>
