@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Admin\Form\Domain\Dto;
+namespace Admin\Field\Domain\Dto;
 
 use Admin\Shared\Domain\Dto\Dto;
 
-class FormFieldDto extends Dto
+class FieldDto extends Dto
 {
     const TYPE_TEXT = 'text';
     const TYPE_CHECKBOX = 'checkbox';
@@ -21,9 +21,10 @@ class FormFieldDto extends Dto
     public $collection = [];
     public ?string $placeholder = '';
     public int $textareaRows = 10;
-    public bool $line = false;
+    public bool $line = true;
     public bool $checked = false;
     public bool $multiple = false;
+    public bool $readOnly = false;
 
     public function setType(string $type): self
     {
@@ -82,6 +83,12 @@ class FormFieldDto extends Dto
     public function setMultiple(bool $multiple): self
     {
         $this->multiple = $multiple;
+        return $this;
+    }
+
+    public function setReadOnly(bool $readOnly): self
+    {
+        $this->readOnly = $readOnly;
         return $this;
     }
 }

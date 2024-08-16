@@ -4,10 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\Admin\Page;
 use Illuminate\Http\Request;
-use Admin\Form\Domain\Dto\FormFieldDto;
+use Admin\Field\Domain\Dto\FieldDto;
 use Admin\Breadcrumbs\Domain\Dto\BreadcrumbDto;
 use App\Http\Controllers\Admin\AdminController;
-use Admin\Form\Domain\Dto\FormFieldCollectionDto;
+use Admin\Field\Domain\Dto\FieldCollectionDto;
 use Admin\Breadcrumbs\Domain\Dto\BreadcrumbCollectionDto;
 
 class PagesController extends AdminController
@@ -35,12 +35,12 @@ class PagesController extends AdminController
         $fields = [];
         foreach (Page::getColumns() as $key => $value) {
             if (in_array($key, ['id', 'created_at', 'updated_at'])) continue;
-            $dto =  (new FormFieldDto())->setName($key)->setLabel($value)->setType(FormFieldDto::TYPE_TEXT);
-            if ($key === 'active') $dto = $dto->setValue(1)->setChecked(true)->setType(FormFieldDto::TYPE_CHECKBOX);
+            $dto =  (new FieldDto())->setName($key)->setLabel($value)->setType(FieldDto::TYPE_TEXT);
+            if ($key === 'active') $dto = $dto->setValue(1)->setChecked(true)->setType(FieldDto::TYPE_CHECKBOX);
             $fields[] = $dto;
         }
 
-        $collection = new FormFieldCollectionDto($fields);
+        $collection = new FieldCollectionDto($fields);
         $action = route('admin.pages.store');
         $method = 'POST';
         $btnText = 'Добавить';

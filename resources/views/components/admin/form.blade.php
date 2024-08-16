@@ -12,8 +12,12 @@
             @switch($dto->type)
                 @case('text')
                     <label for="{{ $fieldId }}" class="form__label">{{ $dto->label }}</label>
-                    <input id="{{ $fieldId }}" type="text" name="{{ $dto->name }}" placeholder="{{ $dto->placeholder }}"
-                        value="{{ $dto->value }}" class="form__field">
+                    @if ($dto->readOnly)
+                        <span>{{ $dto->value }}</span>
+                    @else
+                        <input id="{{ $fieldId }}" type="text" name="{{ $dto->name }}"
+                            placeholder="{{ $dto->placeholder }}" value="{{ $dto->value }}" class="form__field">
+                    @endif
                 @break
 
                 @case('textarea')
@@ -31,8 +35,10 @@
                 @break
 
                 @case('dropdown')
-                    <label for="{{ $fieldId }}" class="form__label">{{ $dto->label }}</label>
-                    <x-admin.dropdown addClass="search__dropdown" :collection="$dto->collection" />
+                    @if ($dto->collection->isNotEmpty())
+                        <label for="{{ $fieldId }}" class="form__label">{{ $dto->label }}</label>
+                        <x-admin.dropdown addClass="search__dropdown" :collection="$dto->collection" />
+                    @endif
                 @break
 
                 @default

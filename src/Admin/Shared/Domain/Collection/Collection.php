@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Admin\Shared\Domain\Collection;
@@ -34,9 +35,7 @@ abstract class Collection implements Countable, ArrayAccess, Iterator, JsonSeria
      */
     abstract public function type(): string;
 
-    protected function onAfterCreate(): void
-    {
-    }
+    protected function onAfterCreate(): void {}
 
     /**
      * @param array-key $offset
@@ -259,8 +258,19 @@ abstract class Collection implements Countable, ArrayAccess, Iterator, JsonSeria
     /**
      * @return T|null
      */
-    public function first() {
+    public function first()
+    {
         if ($this->isNotEmpty()) return $this->all()[0];
         return null;
+    }
+
+    public function keysByField($field): array
+    {
+        $array = [];
+        foreach ($this->items as $item) {
+            $array[] = $item->$field;
+        }
+
+        return $array;
     }
 }

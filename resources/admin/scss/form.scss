@@ -8,7 +8,9 @@
             margin-bottom: 0;
         }
         &_line {
-            flex-direction: row;
+            display: grid;
+            grid-template-columns: 240px 1fr;
+            gap: 10px;
             align-items: center;
             .form__label {
                 margin: 0 10px 0 0;

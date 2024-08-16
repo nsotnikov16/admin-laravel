@@ -2,9 +2,11 @@
 
 namespace App\Models\Admin;
 
+use Admin\Dropdown\Domain\Dto\DropdownCollectionDto;
+use Admin\Field\Domain\Dto\FieldCollectionDto;
 use App\Models\Admin\BaseModel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Admin\Form\Domain\Dto\FormFieldDto;
+use Admin\Field\Domain\Dto\FieldDto;
 
 class Seo extends BaseModel
 {
@@ -15,18 +17,28 @@ class Seo extends BaseModel
         'active' => false, // значение по умолчанию для active
     ];
 
-    public static function getColumns()
+    public static function getFields()
     {
-        return [
-            'id' => ['name' => 'ID', 'type' => FormFieldDto::TYPE_TEXT, 'default' => true],
-            'url' => ['name' => 'URL', 'type' => FormFieldDto::TYPE_TEXT, 'default' => true],
-            'title' => ['name' => 'TITLE', 'type' => FormFieldDto::TYPE_TEXT, 'default' => true],
-            'h1' => ['name' => 'H1', 'type' => FormFieldDto::TYPE_TEXT, 'default' => true],
-            'description' => ['name' => 'DESCRIPTION', 'type' => FormFieldDto::TYPE_TEXT, 'default' => true],
-            'active' => ['name' => 'Активность', 'type' => FormFieldDto::TYPE_CHECKBOX, 'default' => true],
-            //'entity_id' => ['name' => 'Привязка', 'type' => FormFieldDto::TYPE_DROPDOWN, 'default' => true],
-            'created_at' => ['name' => 'Дата создания', 'type' => FormFieldDto::TYPE_TEXT, 'default' => true],
-            'updated_at' => ['name' => 'Дата обновления', 'type' => FormFieldDto::TYPE_TEXT, 'default' => true]
-        ];
+        return new FieldCollectionDto([
+            (new FieldDto)->setName('id')->setLabel('ID')->setType(FieldDto::TYPE_TEXT)->setReadOnly(true),
+            (new FieldDto)->setName('active')->setLabel('Активность')->setType(FieldDto::TYPE_CHECKBOX)->setValue('1'),
+            (new FieldDto)->setName('created_at')->setLabel('Дата создания')->setType(FieldDto::TYPE_TEXT)->setReadOnly(true),
+            (new FieldDto)->setName('updated_at')->setLabel('Дата обновления')->setType(FieldDto::TYPE_TEXT)->setReadOnly(true),
+            (new FieldDto)->setName('url')->setLabel('URL')->setType(FieldDto::TYPE_TEXT),
+            (new FieldDto)->setName('title')->setLabel('TITLE')->setType(FieldDto::TYPE_TEXT),
+            (new FieldDto)->setName('h1')->setLabel('H1')->setType(FieldDto::TYPE_TEXT),
+            (new FieldDto)->setName('description')->setLabel('DESCRIPTION')->setType(FieldDto::TYPE_TEXT),
+            (new FieldDto)->setName('entity_id')->setLabel('Привязка')->setType(FieldDto::TYPE_DROPDOWN)->setCollection(new DropdownCollectionDto([])),
+        ]);
+    }
+
+    public function getFieldsWithValues() {
+        $fields = self::getFields();
+        foreach ($fields as $key => $field) {
+            $fields[$key]->setValue($this[$field->name]);
+            if ($field->name === 'active') $fields[$key]->setValue('1');
+            $fields[$key]->setChecked((bool) $this[$field->name]);
+        }
+        return $fields;
     }
 }

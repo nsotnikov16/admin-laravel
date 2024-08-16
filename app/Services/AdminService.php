@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Admin\Query\Domain\Dto\QueryDto;
 use Admin\Breadcrumbs\Domain\Dto\BreadcrumbCollectionDto;
 use Admin\Breadcrumbs\Domain\Dto\BreadcrumbDto;
+use Admin\Shared\Domain\Collection\Collection;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 
 class AdminService
@@ -64,10 +65,10 @@ class AdminService
         return $record;
     }
 
-    public function getPropTable(array $items, array $columns = [], string $templateLinkEdit, string $templateLinkDelete): array
+    public function getPropTable(array $items, Collection $columns, string $templateLinkEdit, string $templateLinkDelete): array
     {
         return [
-            'head' => array_map(fn($item) => $item['name'], $columns),
+            'head' => $columns->keysByField('label'),
             'body' => $this->modifyRecords($items, function ($record) use ($templateLinkEdit, $templateLinkDelete) {
                 $record['editLink'] = str_replace('#id#', $record['id'], $templateLinkEdit);
                 $record['deleteLink'] = str_replace('#id#', $record['id'], $templateLinkDelete);

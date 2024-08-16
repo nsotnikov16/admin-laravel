@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
-use Admin\Form\Domain\Dto\FormFieldDto;
+use Admin\Field\Domain\Dto\FieldDto;
 use Admin\Breadcrumbs\Domain\Dto\BreadcrumbDto;
 use App\Http\Controllers\Admin\AdminController;
-use Admin\Form\Domain\Dto\FormFieldCollectionDto;
+use Admin\Field\Domain\Dto\FieldCollectionDto;
 use Admin\Breadcrumbs\Domain\Dto\BreadcrumbCollectionDto;
 use Admin\Shared\Domain\Dto\ResultDto;
 use Illuminate\Http\JsonResponse;
@@ -26,15 +26,15 @@ class InsertsController extends AdminController
         $items = [];
 
         foreach ($inserts as $insert) {
-            $items[] = (new FormFieldDto())
-                ->setType(FormFieldDto::TYPE_TEXTAREA)
+            $items[] = (new FieldDto())
+                ->setType(FieldDto::TYPE_TEXTAREA)
                 ->setName($insert->code)
                 ->setLabel($insert->name)
                 ->setTextareaRows(20)
                 ->setValue($insert->content);
         }
 
-        $collection = new FormFieldCollectionDto($items);
+        $collection = new FieldCollectionDto($items);
         return view('admin.inserts', compact('collection'));
     }
 

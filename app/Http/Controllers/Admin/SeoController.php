@@ -9,25 +9,23 @@ use Admin\Shared\Domain\Dto\ResultDto;
 use Admin\Dropdown\Domain\Dto\DropdownItemDto;
 use Admin\Breadcrumbs\Domain\Dto\BreadcrumbDto;
 use App\Http\Controllers\Admin\AdminController;
-use Admin\Form\Domain\Dto\FormFieldCollectionDto;
+use Admin\Field\Domain\Dto\FieldCollectionDto;
 use Admin\Dropdown\Domain\Dto\DropdownCollectionDto;
 use Admin\Breadcrumbs\Domain\Dto\BreadcrumbCollectionDto;
-use Admin\Form\Domain\Dto\FormFieldDto;
+use Admin\Field\Domain\Dto\FieldDto;
 
 class SeoController extends AdminController
 {
-    protected $columns = [];
-
     /**
      * Display a listing of the resource.
      */
     public function index(Request $request)
     {
-        $columns = Seo::getColumns();
+        $fields = Seo::getFields();
 
         $query =  (new QueryDto)
             ->setModelClass(Seo::class)
-            ->setColumns(array_keys($columns))
+            ->setColumns($fields->keysByField('name'))
             ->setLogicAnd(false);
 
         if ($request->sortBy && $request->sortType) {
@@ -45,7 +43,7 @@ class SeoController extends AdminController
         $templateLinkEdit = route('admin.seo.edit', ['seo' => '#id#']);
         $templateLinkDelete = route('admin.seo.destroy', ['seo' => '#id#']);
 
-        $table = app('admin')->getPropTable($result->all(), $columns, $templateLinkEdit, $templateLinkDelete);
+        $table = app('admin')->getPropTable($result->all(), $fields, $templateLinkEdit, $templateLinkDelete);
 
         if ($request->ajax()) {
             $result = (new ResultDto)->setSuccess(true)
@@ -84,8 +82,8 @@ class SeoController extends AdminController
             (new BreadcrumbDto)->setName('SEO'),
         ]);
 
-        $filterFields = new FormFieldCollectionDto([
-            (new FormFieldDto)->setType(FormFieldDto::TYPE_DROPDOWN)
+        $filterFields = new FieldCollectionDto([
+            (new FieldDto)->setType(FieldDto::TYPE_DROPDOWN)
                 ->setLabel('Активность')
                 ->setLine(true)
                 ->setCollection((new DropdownCollectionDto([
@@ -100,8 +98,8 @@ class SeoController extends AdminController
                 ]))->setIsRadio(true))
         ]);
 
-        $sortFields = new FormFieldCollectionDto([
-            (new FormFieldDto)->setType(FormFieldDto::TYPE_DROPDOWN)
+        $sortFields = new FieldCollectionDto([
+            (new FieldDto)->setType(FieldDto::TYPE_DROPDOWN)
                 ->setLabel('Поле')
                 ->setLine(true)
                 ->setCollection((new DropdownCollectionDto([
@@ -114,7 +112,7 @@ class SeoController extends AdminController
                         ->setLabel('URL')
                         ->setChecked($request->sortBy === 'url')
                 ]))->setIsRadio(true)->setButtonText('Выберите поле')),
-            (new FormFieldDto)->setType(FormFieldDto::TYPE_DROPDOWN)
+            (new FieldDto)->setType(FieldDto::TYPE_DROPDOWN)
                 ->setLabel('Тип')
                 ->setLine(true)
                 ->setCollection((new DropdownCollectionDto([
@@ -154,15 +152,7 @@ class SeoController extends AdminController
             (new BreadcrumbDto)->setName(app('admin')->title)
         ]);
 
-        $fields = [];
-        foreach (Seo::getColumns() as $key => $item) {
-            if (in_array($key, ['id', 'created_at', 'updated_at'])) continue;
-            $dto =  (new FormFieldDto())->setName($key)->setLabel($item['name'])->setType(FormFieldDto::TYPE_TEXT);
-            if ($key === 'active') $dto = $dto->setValue(1)->setChecked(true)->setType(FormFieldDto::TYPE_CHECKBOX);
-            $fields[] = $dto;
-        }
-
-        $collection = new FormFieldCollectionDto($fields);
+        $collection = Seo::getFields();
         $action = route('admin.seo.store');
         $method = 'POST';
         $btnText = 'Добавить';
@@ -206,19 +196,7 @@ class SeoController extends AdminController
             (new BreadcrumbDto)->setName('Редактирование SEO для страницы')
         ]);
 
-        $fields = [];
-        foreach (Seo::getColumns() as $key => $item) {
-            if (in_array($key, ['id', 'created_at', 'updated_at'])) continue;
-
-            $dto =  (new FormFieldDto())->setName($key)
-                ->setLabel($item['name'])
-                ->setType($item['type'])
-                ->setValue($model[$key] ?? $item['default'])
-                ->setChecked((bool) $model[$key] ?? $item['default']);
-            $fields[] = $dto;
-        }
-
-        $collection = new FormFieldCollectionDto($fields);
+        $collection = $model->getFieldsWithValues();
         $action = route('admin.seo.update', ['seo' => $id]);
         $method = 'PUT';
         $btnText = 'Изменить';
@@ -230,8 +208,6 @@ class SeoController extends AdminController
      */
     public function update(Request $request, string $id)
     {
-
-
         $request->validate([
             'url' => 'required|unique:sa_seo,url,' . $id . '|max:500',
             'title' => 'max:255',
